@@ -1,5 +1,6 @@
 var Runner = require('../lib/modules.js').components.runner;
 var fs = require('fs');
+var webhooks = require('../webhooks');
 
 // Build Controller
 module.exports = {
@@ -72,13 +73,24 @@ module.exports = {
     // Check request type (Github hook or manual)
     if (req.params[0]) {
       // Manual trigger
+      console.log('Processing manual git trigger...');
       query = { name: req.params[0] };
     } else {
       // Github hook
+      console.log('Processing webhook...');
       var payload = JSON.parse(req.body.payload);
-      var repo = 'git@github.com:'+payload.repository.url.replace('https://github.com/','')+'.git';
-      var branch = payload.ref.replace('refs/heads/', '');
+
+      for (var key in webhooks) {
+          if (webhooks.hasOwnProperty(key)) {
+               if (webhooks[key].isCompatible(payload)) {
+                   console.log(key + ' webhook detected...');
+                   query = webhooks[key].process(payload);
+               }
+          }
+      }
+
       query = { repo: repo, branch: branch };
+      console.log('project query: ' + JSON.stringify(query));
     }
 
     self.data.projects.find(query, function (err, projectData) {
