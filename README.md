@@ -89,8 +89,6 @@ You can then log in with the email address and password you created during insta
 
 ## Configuring Projects
 
-TEST
-
 Projects utilize an `avow.json` file in their root directory to inform the build
 process of tasks to run. This file needs to be added to any project's repository
 which will be added to the system.
