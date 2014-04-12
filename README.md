@@ -78,6 +78,8 @@ enable this capability you must create a `mail_conf.json` file in the root:
 to build return links from the outgoing email back to the failing build and should
 be formatted like: `http://yourserver.com:8181`.*
 
+For more information on the mail transport parameters, read the [Nodemailer documentation](http://www.nodemailer.com/docs/smtp).
+
 ## Accessing the Web App
 
 The default port (which can be changed in `/config.js`) is `8181`, so when the
