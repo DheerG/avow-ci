@@ -1,0 +1,6 @@
+{
+    "tasks": [
+        "npm install",
+        "grunt"
+    ]
+}
