@@ -89,7 +89,6 @@ module.exports = {
           }
       }
 
-      query = { repo: repo, branch: branch };
       console.log('project query: ' + JSON.stringify(query));
     }
 
