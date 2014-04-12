@@ -5,7 +5,22 @@ var fsx = require('fs-extra');
 var fs = require('fs');
 
 // Spawns and runs processes and logs output
-var Processor = function (task, id, socket, callback) {
+var Processor = function (task, runner, callback) {
+
+  var id = runner.build,
+      socket = runner.buildSocket;
+
+  // allows for Runner parameters to be specified in the tasks list via @prop.
+  // example:
+  // grunt deploy-@branch
+  for (var key in runner) {
+      if (runner.hasOwnProperty(key)) {
+          if (task.indexOf("@" + key) >= 0) {
+            task = task.replace("@" + key, runner[key]);
+          }
+      }
+  }
+
   // Get arguments, split command, setup vars
   var args = task.split(' ');
   var command = args[0];

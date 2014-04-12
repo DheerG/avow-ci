@@ -71,7 +71,7 @@ Runner.prototype.run = function () {
     // Run processes/tasks
     tasks: function (callback) {
       async.eachSeries(self.config.tasks, function (i, callback) {
-        var proc = new Processor(i, self.build, self.buildSocket, callback);
+        var proc = new Processor(i, self, callback);
       }, function (err) {
         callback(err);
       });
