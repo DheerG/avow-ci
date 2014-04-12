@@ -57,12 +57,17 @@ Runner.prototype.run = function () {
         if (err) {
           callback(err);
         } else {
-          self.updateBuildData({ config: JSON.parse(data) });
-          if (self.config === '') {
-            callback('No config data in avow.json');
-          } else {
-            self.config = JSON.parse(data);
-            callback(null);
+          try {
+              self.updateBuildData({ config: JSON.parse(data) });
+              if (self.config === '') {
+                callback('No config data in avow.json');
+              } else {
+                self.config = JSON.parse(data);
+                callback(null);
+              }
+          }
+          catch (err) {
+              callback(err);
           }
         }
       });
